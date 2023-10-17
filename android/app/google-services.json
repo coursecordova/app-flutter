@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "429278787562",
+    "project_id": "sign-in-96602",
+    "storage_bucket": "sign-in-96602.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429278787562:android:6d48bfa48c4fc02537a493",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_cordova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "429278787562-nn9d3phqqq16obfc0oh9ebfoe0lh100d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3fnW8QwsDph0b_0Hpbq7s86BXdIYSU_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "429278787562-40up4k3p03k80udaqlba0156lfrdv8rn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
