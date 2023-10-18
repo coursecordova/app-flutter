@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class info extends StatefulWidget {
   const info({super.key});
@@ -75,7 +76,7 @@ class _infoState extends State<info> {
             CardInfo(Icons.question_answer, 'FAQ', 'https://cordovacourse.com/faq-app/'),
             CardInfo(Icons.book, 'Syarat & Ketentuan','https://cordovacourse.com/syarat-ketentuan-app/'),
             CardInfo(Icons.person, 'Tentang Kami','https://cordovacourse.com/tentang-kami-app/'),
-            CardInfo(Icons.whatsapp, 'Hubungi Kami', 'https://wa.me/${6282124308812} ?text=Halo, Cordovacourse'),
+            CardInfo(FaIcon(FontAwesomeIcons.whatsapp), 'Hubungi Kami', 'https://wa.me/${6282124308812} ?text=Halo, Cordovacourse'),
           ],
         ),
       ),
