@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:360238320558:ios:64b9ff2eb8d44c1c78963f",
-  "FIREBASE_PROJECT_ID": "database-cordova-a0a14",
-  "GCM_SENDER_ID": "360238320558"
+  "GOOGLE_APP_ID": "1:556038236144:ios:9030f77117a198cf671f35",
+  "FIREBASE_PROJECT_ID": "cordova-app-project-66bf5",
+  "GCM_SENDER_ID": "556038236144"
 }

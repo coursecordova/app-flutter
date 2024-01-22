@@ -44,37 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB043UhS0iY5rPAOhuL5Tw_e1SvIEQEJLQ',
-    appId: '1:360238320558:web:b7cf749c32de982978963f',
-    messagingSenderId: '360238320558',
-    projectId: 'database-cordova-a0a14',
-    authDomain: 'database-cordova-a0a14.firebaseapp.com',
-    storageBucket: 'database-cordova-a0a14.appspot.com',
+    apiKey: 'AIzaSyAod1j3Yoww1vFT7LOvh_hIhHAwP4mhuCE',
+    appId: '1:556038236144:web:7588368c56eda1ef671f35',
+    messagingSenderId: '556038236144',
+    projectId: 'cordova-app-project-66bf5',
+    authDomain: 'cordova-app-project-66bf5.firebaseapp.com',
+    storageBucket: 'cordova-app-project-66bf5.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA0D9lCrSE9IT6P0h9nuFABI4Yvho1ot24',
-    appId: '1:360238320558:android:e5f12c5c191fda0d78963f',
-    messagingSenderId: '360238320558',
-    projectId: 'database-cordova-a0a14',
-    storageBucket: 'database-cordova-a0a14.appspot.com',
+    apiKey: 'AIzaSyAoqznu3RJ-jO1UOjxeZr0tchgijmgJuLk',
+    appId: '1:556038236144:android:2a1bf7901e3735c7671f35',
+    messagingSenderId: '556038236144',
+    projectId: 'cordova-app-project-66bf5',
+    storageBucket: 'cordova-app-project-66bf5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDHaJHRRn6ctJT8NyNgivC2vkvHQFod6Eg',
-    appId: '1:360238320558:ios:64b9ff2eb8d44c1c78963f',
-    messagingSenderId: '360238320558',
-    projectId: 'database-cordova-a0a14',
-    storageBucket: 'database-cordova-a0a14.appspot.com',
+    apiKey: 'AIzaSyCMHyg3BWb2KvFbBut3066LlEJuVGQ04QY',
+    appId: '1:556038236144:ios:9030f77117a198cf671f35',
+    messagingSenderId: '556038236144',
+    projectId: 'cordova-app-project-66bf5',
+    storageBucket: 'cordova-app-project-66bf5.appspot.com',
     iosBundleId: 'com.example.flutterApplicationCordova',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDHaJHRRn6ctJT8NyNgivC2vkvHQFod6Eg',
-    appId: '1:360238320558:ios:64b9ff2eb8d44c1c78963f',
-    messagingSenderId: '360238320558',
-    projectId: 'database-cordova-a0a14',
-    storageBucket: 'database-cordova-a0a14.appspot.com',
+    apiKey: 'AIzaSyCMHyg3BWb2KvFbBut3066LlEJuVGQ04QY',
+    appId: '1:556038236144:ios:9030f77117a198cf671f35',
+    messagingSenderId: '556038236144',
+    projectId: 'cordova-app-project-66bf5',
+    storageBucket: 'cordova-app-project-66bf5.appspot.com',
     iosBundleId: 'com.example.flutterApplicationCordova',
   );
 }

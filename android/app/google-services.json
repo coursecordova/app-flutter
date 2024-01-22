@@ -1,45 +1,51 @@
 {
   "project_info": {
-    "project_number": "360238320558",
-    "project_id": "database-cordova-a0a14",
-    "storage_bucket": "database-cordova-a0a14.appspot.com"
+    "project_number": "556038236144",
+    "project_id": "cordova-app-project-66bf5",
+    "storage_bucket": "cordova-app-project-66bf5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:360238320558:android:da5bb56badc0825978963f",
+        "mobilesdk_app_id": "1:556038236144:android:2a1bf7901e3735c7671f35",
         "android_client_info": {
-          "package_name": "com.example.testing_app"
+          "package_name": "com.example.flutter_application_cordova"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "556038236144-4ccgug4fbfupadp8fam2s0e5ee5nonv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_cordova",
+            "certificate_hash": "5cd489633ff4d6965b0a97e68e75e47e77064dd1"
+          }
+        },
+        {
+          "client_id": "556038236144-np3klf1c4a4hk6vovpo406r4i905qr0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyA0D9lCrSE9IT6P0h9nuFABI4Yvho1ot24"
+          "current_key": "AIzaSyAoqznu3RJ-jO1UOjxeZr0tchgijmgJuLk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:360238320558:android:e5f12c5c191fda0d78963f",
-        "android_client_info": {
-          "package_name": "com.tanxe.flutter_application_cordova"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA0D9lCrSE9IT6P0h9nuFABI4Yvho1ot24"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556038236144-np3klf1c4a4hk6vovpo406r4i905qr0n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "556038236144-2sc6n9uetqtodv2171n850v7ri57h6l9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApplicationCordova"
+              }
+            }
+          ]
         }
       }
     }

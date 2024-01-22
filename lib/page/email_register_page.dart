@@ -1,23 +1,22 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-// import 'package:mailer/mailer.dart';
-// import 'package:mailer/smtp_server.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_cordova/component/alert.dart';
+import 'package:flutter_application_cordova/page/auth_page.dart';
 import 'package:flutter_application_cordova/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:flutter_application_cordova/navigation bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:after_layout/after_layout.dart';
-import 'package:flutter_application_cordova/data.dart';
+import 'package:flutter_application_cordova/utils/data.dart';
 
 class Coba {
   int? umur;
 }
 
+// ignore: must_be_immutable
 class emailSend extends StatefulWidget {
-  bool suksesRegis = true;
+  bool suksesRegis = false;
   bool regis = false;
+  bool isShowPassword = false;
 
   emailSend() {
     regis = Userpref.getNilai() ?? false;
@@ -28,11 +27,13 @@ class emailSend extends StatefulWidget {
 }
 
 class _emailSendState extends State<emailSend> {
-  String nama = '';
+  String email = '';
+  String password = '';
   String sekolah = '';
   String noHp = '';
-  String email = '';
   bool nextPage = false;
+  bool isVisibilityTextPassword = false;
+  bool isVisibilityTextSchool = false;
 
   @override
   void initState() {
@@ -52,114 +53,28 @@ class _emailSendState extends State<emailSend> {
   Future<void> cekRegis() async {
     widget.suksesRegis = false;
 
-    if (await signupWithEmail(nama: nama, sekolah: sekolah, noHp: noHp)) {
+    bool isValid = false;
+    String message = "";
+
+    await signupWithEmail(
+            email: email, password: password, noHp: noHp, sekolah: sekolah)
+        .then((value) =>
+            {isValid = value['isValid'], message = value['message']});
+
+    if (isValid) {
       widget.suksesRegis = true;
       widget.regis = true;
     }
     ;
 
-    (widget.suksesRegis) ? showAlertSukses() : showAlertWarning();
+    Userpref.setNilai(true);
 
-    // if (nama != '') {
-    //   if (noHp != '') {
-    //     if (noHp.length > 10 && noHp.length <= 14) {
-    //       if (sekolah != '' && sekolah.length > 3 || sekolah == '-') {
-    //         widget.suksesRegis = true;
-    //         widget.regis = true;
-    //         kirimEmail();
-    //       }
-    //     }
-    //   }
-    // }
+    (widget.suksesRegis)
+        ? AlertSystem.successAlert(context, text: message, page: "/home")
+        : showAlertWarning(message);
   }
 
-  kirimEmail() async {
-    final dataUser = FirebaseFirestore.instance.collection('users').doc();
-
-    final json = {
-      'nama': nama,
-      'sekolah': sekolah,
-      'noHp': noHp,
-    };
-
-    await dataUser.set(json);
-    print("data terkirim");
-
-    // Note that using a username and password for gmail only works if
-    // you have two-factor authentication enabled and created an App password.
-    // Search for "gmail app password 2fa"
-    // The alternative is to use oauth.
-    // String username = 'tiktokcordova9@gmail.com';
-    // String password = 'fvsllpmmdjbicudm';
-
-    // final smtpServer = gmail(username, password);
-    // final message = Message()
-    //   ..from = Address(username, 'indra')
-    //   ..recipients.add('admin@cordovacourse.com')
-    //   ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
-    //   ..bccRecipients.add(Address('bccAddress@example.com'))
-    //   ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
-    //   ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-    //   ..html =
-    //       "<h1>Test</h1>\n<p>Nama : $nama</p>\n<p>Sekolah : $sekolah</p>\n<p>No. Hp : $noHp</p>";
-
-    // try {
-    //   final sendReport = await send(message, smtpServer);
-    //   print('Message sent: ' + sendReport.toString());
-    // } on MailerException catch (e) {
-    //   print('Message not sent.');
-    //   for (var p in e.problems) {
-    //     print('Problem: ${p.code}: ${p.msg}');
-    //   }
-    // }
-    // //
-  }
-
-  void showAlertSukses() {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      barrierDismissible: false,
-      confirmBtnText: 'Mulai',
-      title: '',
-      widget: Column(
-        children: [
-          Container(
-            width: 230,
-            child: Text(
-              'Berhasil!',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
-                  textStyle:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            width: 230,
-            child: Text(
-              'Ayo! Mulai buat teknologi!',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 15)),
-            ),
-          ),
-        ],
-      ),
-      // onConfirmBtnTap: () {
-      //   setState(() {
-      //     Navigator.of(context).pop();
-      //     Future.delayed(Duration(seconds: 1));
-      //      Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //   builder: (context) => const NavigasiBar(),
-      // ));
-      //   });
-      // },
-    );
-  }
-
-  void showAlertWarning() {
+  void showAlertWarning(String text) {
     QuickAlert.show(
         context: context,
         type: QuickAlertType.warning,
@@ -169,7 +84,7 @@ class _emailSendState extends State<emailSend> {
             Container(
               width: 230,
               child: Text(
-                'Data kamu gak valid nih, Mohon isi dengan benar',
+                text,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 15)),
               ),
@@ -181,29 +96,27 @@ class _emailSendState extends State<emailSend> {
         confirmBtnText: 'Okay');
   }
 
-  // pindahPage() {
-  //   if (nextPage) {
-  //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //       builder: (context) => const NavigasiBar(),
-  //     ));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: ((context) => AuthPage())));
+        return true;
+      },
+      child: Scaffold(
           body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         reverse: false,
         padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 300,
-              width: 500,
-              padding: EdgeInsets.all(10),
+              height: 200,
+              width: 400,
+              //padding: EdgeInsets.all(10),
               child: Image.asset('gambar/register1.png'),
             ),
             Container(
@@ -231,7 +144,7 @@ class _emailSendState extends State<emailSend> {
               child: TextField(
                 onChanged: ((value) {
                   setState(() {
-                    nama = value.toString();
+                    email = value.toString();
                   });
                 }),
                 decoration: InputDecoration(
@@ -239,10 +152,10 @@ class _emailSendState extends State<emailSend> {
                       borderRadius: BorderRadius.circular(10)),
                   fillColor: Color.fromARGB(255, 255, 240, 245),
                   filled: false,
-                  labelText: 'Nama lengkap kamu',
+                  labelText: 'Email kamu',
                   floatingLabelStyle:
                       GoogleFonts.poppins(textStyle: TextStyle(fontSize: 15)),
-                  prefixIcon: Icon(Icons.person,
+                  prefixIcon: Icon(Icons.email,
                       color: Color.fromARGB(253, 215, 5, 124)),
                   labelStyle: TextStyle(fontSize: 12),
                 ),
@@ -253,10 +166,12 @@ class _emailSendState extends State<emailSend> {
               width: 280,
               margin: EdgeInsets.only(left: 30, right: 30, top: 10),
               child: TextField(
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: !widget.isShowPassword,
                 onChanged: ((value) {
                   setState(() {
-                    noHp = value.toString();
+                    password = value.toString();
+                    isVisibilityTextPassword = value.isNotEmpty;
                   });
                 }),
                 decoration: InputDecoration(
@@ -266,7 +181,49 @@ class _emailSendState extends State<emailSend> {
                   filled: false,
                   floatingLabelStyle:
                       GoogleFonts.poppins(textStyle: TextStyle(fontSize: 15)),
-                  labelText: 'Nomor telepon kamu',
+                  labelText: 'Password',
+                  labelStyle: TextStyle(fontSize: 12),
+                  prefixIcon:
+                      Icon(Icons.lock, color: Color.fromARGB(253, 215, 5, 124)),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        widget.isShowPassword = !widget.isShowPassword;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: isVisibilityTextPassword,
+              child: Container(
+                margin: EdgeInsets.only(left: 35, right: 10),
+                child: Text('Gunakan password minimal 8 huruf',
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 10))),
+              ),
+            ),
+            Container(
+              height: 60,
+              width: 280,
+              margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+              child: TextField(
+                onChanged: ((value) {
+                  setState(() {
+                    noHp = value.toString();
+                  });
+                }),
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  fillColor: Color.fromARGB(255, 255, 240, 245),
+                  filled: false,
+                  labelText: 'Nomor Handphone',
+                  floatingLabelStyle:
+                      GoogleFonts.poppins(textStyle: TextStyle(fontSize: 15)),
                   labelStyle: TextStyle(fontSize: 12),
                   prefixIcon: Icon(Icons.phone,
                       color: Color.fromARGB(253, 215, 5, 124)),
@@ -281,6 +238,7 @@ class _emailSendState extends State<emailSend> {
                 onChanged: ((value) {
                   setState(() {
                     sekolah = value.toString();
+                    isVisibilityTextSchool = true;
                   });
                 }),
                 decoration: InputDecoration(
@@ -297,12 +255,15 @@ class _emailSendState extends State<emailSend> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(left: 35, right: 10),
-              child: Text(
-                  'Asal sekolah isi dengan tanda (-) jika bukan pelajar',
-                  style:
-                      GoogleFonts.poppins(textStyle: TextStyle(fontSize: 10))),
+            Visibility(
+              visible: isVisibilityTextSchool,
+              child: Container(
+                margin: EdgeInsets.only(left: 35, right: 10),
+                child: Text(
+                    'Asal sekolah isi dengan tanda (-) jika bukan pelajar',
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 10))),
+              ),
             ),
             Container(
               height: 50,
@@ -311,18 +272,6 @@ class _emailSendState extends State<emailSend> {
               child: ElevatedButton(
                 onPressed: () {
                   cekRegis();
-                  // setState(() {
-                  //   (widget.suksesRegis)
-                  //       ? showAlertSukses()
-                  //       : showAlertWarning();
-                  // });
-                  // setState(() {
-                  //   cekRegis();
-                  //   // saveData();
-                  //   (widget.suksesRegis)
-                  //       ? showAlertSukses()
-                  //       : showAlertWarning();
-                  // });
                 },
                 child: Text(
                   'Kirim',
@@ -341,7 +290,6 @@ class _emailSendState extends State<emailSend> {
     );
   }
 
-  @override
   FutureOr<void> afterFirstLayout(BuildContext context) {
     // TODO: implement afterFirstLayout
     throw UnimplementedError();

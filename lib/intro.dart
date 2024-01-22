@@ -1,18 +1,20 @@
+import 'package:flutter_application_cordova/utils/data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_cordova/email regis.dart';
+import 'package:flutter_application_cordova/page/email_register_page.dart';
 import 'package:flutter_application_cordova/navigation bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import "package:flutter_application_cordova/page/auth_page.dart";
 import 'package:after_layout/after_layout.dart';
 import 'dart:async';
 import 'package:lottie/lottie.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
 class Asal {
   static String a = 'indra';
 }
 
+// ignore: must_be_immutable
 class Splash extends StatefulWidget {
   @override
   SplashState createState() => new SplashState();
@@ -31,17 +33,18 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     SharedPreferences prefs;
     prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
+    bool isLogin = (prefs.getBool('home') ?? false);
 
     if (_seen) {
-      if (widget.getHasilRegis) {
+      if (isLogin) {
+        await Userpref.setIsLogin(true);
         Navigator.of(context).pushReplacement(
             new MaterialPageRoute(builder: (context) => NavigasiBar()));
       } else {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => emailSend()));
+            new MaterialPageRoute(builder: (context) => AuthPage()));
       }
-    } 
-    else {
+    } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => intro()));
@@ -53,34 +56,32 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: 200,
-                width: 200,
-                child: Image.asset('gambar/logos.png'),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 200,
+              width: 200,
+              child: Image.asset('gambar/logos.png'),
+            ),
+            Container(
+                child: Lottie.asset('gambar/robot.json',
+                    width: 300, height: 400, fit: BoxFit.fill)),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                'Kursus Coding Pelajar',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.roboto(
+                    textStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(253, 215, 5, 124))),
               ),
-              Container(
-                  child: Lottie.asset('gambar/robot.json',
-                      width: 300, height: 400, fit: BoxFit.fill)),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  'Kursus Coding Pelajar',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.roboto(
-                      textStyle: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(253, 215, 5, 124))),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -156,8 +157,11 @@ class intro extends StatelessWidget {
               'Langsung dengan tutor',
               'Dibimbing langsung oleh para praktisi ahli di bidangnya dan dengan pengalaman mengajar',
               false),
-          design("gambar/certificate1.png", 'Bersertifikat',
-              'Dapatkan sertifikat resmi kami dan bangun masa depan kamu', false),
+          design(
+              "gambar/certificate1.png",
+              'Bersertifikat',
+              'Dapatkan sertifikat resmi kami dan bangun masa depan kamu',
+              false),
           PageViewModel(
             title: '',
             bodyWidget: Column(
@@ -192,7 +196,7 @@ class intro extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => emailSend(),
+                builder: (context) => AuthPage(),
               ));
             },
             child: Text(
